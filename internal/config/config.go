@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/joho/godotenv"
 	"log"
 	"os"
 	"time"
@@ -29,9 +30,14 @@ type Postgres struct {
 
 func ConfigLoad() *Config {
 	var config Config
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file\n")
+		os.Exit(1)
+	}
 	config.HttpServer.Address = getEnv("HTTP_SERVER_ADDRESS", "127.0.0.1")
 	config.HttpServer.Port = getEnv("HTTP_SERVER_PORT", "8080")
-	config.HttpServer.Timeout = getDurationEnv("HTTP_SERVER_TIMEOUT", 3*time.Second)
+	config.HttpServer.Timeout = getDurationEnv("HTTP_SERVER_TIMEOUT", 10*time.Second)
 	config.HttpServer.IdleTimeout = getDurationEnv("HTTP_SERVER_IDLE_TIMEOUT", 30*time.Second)
 
 	config.Postgres.Host = getEnv("POSTGRES_HOST", "localhost")

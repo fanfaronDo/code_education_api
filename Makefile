@@ -3,4 +3,8 @@ build_app:
 
 
 run_app:
-	go run ./cmd/app/main.go
+	@go run ./cmd/app/main.go
+
+
+test:
+	@go build ./cmd/test/main.go

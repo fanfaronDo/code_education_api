@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    volumes:
+      - post_data:/var/lib/postgresql/data
+      - ./schema/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DATABASE=notes
+      - POSTGRES_SSL_MODE=disable
+    networks:
+      my_net:
+        ipv4_address: 172.10.10.2
+
+networks:
+  my_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.10.10.0/29
+volumes:
+  post_data:
