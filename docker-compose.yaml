@@ -8,13 +8,13 @@ services:
       - post_data:/var/lib/postgresql/data
       - ./schema/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
     environment:
-      - POSTGRES_USER=postgres
+      - POSTGRES_USER=notes
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DATABASE=notes
       - POSTGRES_SSL_MODE=disable
     networks:
       my_net:
-        ipv4_address: 172.10.10.2
+          ipv4_address: 172.10.10.2
 
 networks:
   my_net:

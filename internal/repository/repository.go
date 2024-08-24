@@ -2,29 +2,29 @@ package repository
 
 import "database/sql"
 
-type Authorization interface {
+type AuthRepository interface {
 	CreateUser()
 	GetUser()
 }
 
-type Notes interface {
+type NotesRepository interface {
 	GetNotes()
 }
 
-type Note interface {
+type NoteRepository interface {
 	CreateNote()
 }
 
 type Repository struct {
 	Authorization
-	Notes
-	Note
+	NotesRepository
+	NoteRepository
 }
 
 func NewRepository(db *sql.DB) *Repository {
 	return &Repository{
-		Authorization: NewAuthorization(db),
-		Notes:         NewNotes(db),
-		Note:          NewNote(db),
+		Authorization:   NewAuthorization(db),
+		NotesRepository: NewNotes(db),
+		NoteRepository:  NewNote(db),
 	}
 }
