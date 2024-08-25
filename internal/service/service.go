@@ -11,12 +11,24 @@ type AuthService interface {
 	ParseToken(accessToken string) (int, error)
 }
 
+type NoteService interface {
+	CreateNote(userID int, note domain.Note) (int, error)
+}
+
+type NotesService interface {
+	GetNotes(userID int) []domain.Note
+}
+
 type Service struct {
 	AuthService
+	NoteService
+	NotesService
 }
 
 func NewService(repo *repository.Repository) *Service {
 	return &Service{
-		AuthService: NewAuthorization(repo),
+		AuthService:  NewAuthorization(repo),
+		NoteService:  NewNote(repo),
+		NotesService: NewNotes(repo),
 	}
 }

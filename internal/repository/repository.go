@@ -11,11 +11,11 @@ type AuthRepository interface {
 }
 
 type NotesRepository interface {
-	GetNotes()
+	GetNotes(userID int) []domain.Note
 }
 
 type NoteRepository interface {
-	CreateNote()
+	CreateNote(userID int, note domain.Note) (int, error)
 }
 
 type Repository struct {
