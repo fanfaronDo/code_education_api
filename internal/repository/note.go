@@ -11,5 +11,5 @@ func NewNote(db *sql.DB) *Note {
 }
 
 func (n *Note) CreateNote() {
-
+	
 }

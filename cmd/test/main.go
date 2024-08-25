@@ -11,10 +11,14 @@ import (
 
 func main() {
 	cfg := config.ConfigLoad()
-	fmt.Println(cfg)
+
 	conn, err := repository.NewPostgres(cfg.Postgres)
+	repo := repository.NewRepository(conn)
+	user, err := repo.GetUser("Alex123", "123456")
+	fmt.Println(user, err)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Connected to Postgres: %s", conn)
+
+	//fmt.Println("User ID is", id)
 }

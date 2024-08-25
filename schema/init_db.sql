@@ -1,11 +1,12 @@
 CREATE DATABASE notes;
 
+\c notes
 
 CREATE TABLE users(
-                      user_id SERIAL NOT NULL UNIQUE,
-                      name VARCHAR(255) NOT NULL,
-                      username VARCHAR(255) NOT NULL UNIQUE,
-                      password TEXT NOT NULL
+    user_id SERIAL UNIQUE,
+    name VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password TEXT NOT NULL
 );
 
 CREATE TABLE notes(

@@ -1,10 +1,13 @@
 package repository
 
-import "database/sql"
+import (
+	"database/sql"
+	"github.com/fanfaronDo/code_education_api/internal/domain"
+)
 
 type AuthRepository interface {
-	CreateUser()
-	GetUser()
+	CreateUser(user domain.User) (int, error)
+	GetUser(username, password string) (domain.User, error)
 }
 
 type NotesRepository interface {
@@ -16,14 +19,14 @@ type NoteRepository interface {
 }
 
 type Repository struct {
-	Authorization
+	AuthRepository
 	NotesRepository
 	NoteRepository
 }
 
 func NewRepository(db *sql.DB) *Repository {
 	return &Repository{
-		Authorization:   NewAuthorization(db),
+		AuthRepository:  NewAuthorization(db),
 		NotesRepository: NewNotes(db),
 		NoteRepository:  NewNote(db),
 	}

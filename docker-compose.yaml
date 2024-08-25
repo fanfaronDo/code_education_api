@@ -8,7 +8,7 @@ services:
       - post_data:/var/lib/postgresql/data
       - ./schema/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
     environment:
-      - POSTGRES_USER=notes
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DATABASE=notes
       - POSTGRES_SSL_MODE=disable
