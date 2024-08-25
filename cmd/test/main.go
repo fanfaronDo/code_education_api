@@ -16,7 +16,7 @@ func main() {
 	repo := repository.NewRepository(conn)
 	serv := service.NewService(repo)
 
-	id1 := 6
+	id1 := 7
 
 	//, err := serv.CreateUser(domain.User{
 	//
@@ -37,7 +37,7 @@ func main() {
 	fmt.Printf("Created user with id %s\n", id1)
 
 	i, er := serv.NoteService.CreateNote(id1, domain.Note{
-		Title:       "first",
+		Title:       "second",
 		Description: "Test",
 	})
 	if er != nil {
