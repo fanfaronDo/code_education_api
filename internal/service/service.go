@@ -7,15 +7,16 @@ import (
 
 type AuthService interface {
 	CreateUser(user domain.User) (int, error)
-	GetUser(username, password string) (domain.User, error)
+	GenerateToken(username, password string) (string, error)
+	ParseToken(accessToken string) (int, error)
 }
 
 type Service struct {
 	AuthService
 }
 
-func NewAuthService(repo repository.Repository) *Service {
+func NewService(repo *repository.Repository) *Service {
 	return &Service{
-		AuthService: NewAuthService(repo),
+		AuthService: NewAuthorization(repo),
 	}
 }

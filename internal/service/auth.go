@@ -21,10 +21,10 @@ type claims struct {
 }
 
 type Authorization struct {
-	repo repository.Authorization
+	repo *repository.Repository
 }
 
-func NewAuthorization(repo repository.Authorization) *Authorization {
+func NewAuthorization(repo *repository.Repository) *Authorization {
 	return &Authorization{
 		repo: repo,
 	}
@@ -32,11 +32,11 @@ func NewAuthorization(repo repository.Authorization) *Authorization {
 
 func (a *Authorization) CreateUser(user domain.User) (int, error) {
 	user.Password = a.generatePasswordHash(user.Password)
-	return a.repo.CreateUser(user)
+	return a.repo.AuthRepository.CreateUser(user)
 }
 
 func (a *Authorization) GenerateToken(username, password string) (string, error) {
-	user, err := a.repo.GetUser(username, password)
+	user, err := a.repo.AuthRepository.GetUser(username, a.generatePasswordHash(password))
 	if err != nil {
 		return "", err
 	}
