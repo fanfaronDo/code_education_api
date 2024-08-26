@@ -3,6 +3,7 @@ package repository
 import (
 	"database/sql"
 	"github.com/fanfaronDo/code_education_api/internal/domain"
+	_ "github.com/lib/pq"
 )
 
 type AuthRepository interface {

@@ -13,23 +13,22 @@ func main() {
 	cfg := config.ConfigLoad()
 
 	conn, err := repository.NewPostgres(cfg.Postgres)
+	fmt.Println(conn)
 	repo := repository.NewRepository(conn)
 	serv := service.NewService(repo)
 
-	id1 := 7
+	id1, err := serv.CreateUser(domain.User{
 
-	//, err := serv.CreateUser(domain.User{
-	//
-	//	Name:     "Larisa",
-	//	Username: "Beautiful",
-	//	Password: "1234",
-	//})
-	//id2, err := serv.CreateUser(domain.User{
-	//	Name:     "Vyacheslav",
-	//	Username: "Handsome",
-	//	Password: "1234",
-	//})
-
+		Name:     "Larisa",
+		Username: "Beautiful",
+		Password: "1234",
+	})
+	id2, err := serv.CreateUser(domain.User{
+		Name:     "Vyacheslav",
+		Username: "Handsome",
+		Password: "1234",
+	})
+	fmt.Println(id2)
 	if err != nil {
 		panic(err)
 	}

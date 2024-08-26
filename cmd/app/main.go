@@ -1,9 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"github.com/fanfaronDo/code_education_api/internal/config"
 	"github.com/fanfaronDo/code_education_api/internal/handler"
+	"github.com/fanfaronDo/code_education_api/internal/repository"
 	"github.com/fanfaronDo/code_education_api/internal/server"
+	"github.com/fanfaronDo/code_education_api/internal/service"
 	"log"
 	"os"
 	"os/signal"
@@ -12,8 +15,18 @@ import (
 
 func main() {
 	cfg := config.ConfigLoad()
+
 	server := &server.Server{}
-	h := handler.NewHandler()
+	conn, err := repository.NewPostgres(cfg.Postgres)
+	fmt.Println(cfg, conn)
+	if err != nil {
+		log.Printf("Database connection error: %s\n", err)
+		return
+	}
+	repo := repository.NewRepository(conn)
+	service := service.NewService(repo)
+	h := handler.NewHandler(service)
+
 	route := h.InitRoutes()
 	go func() {
 		if err := server.Run(cfg.HttpServer, route); err != nil {
