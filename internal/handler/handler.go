@@ -1,11 +1,8 @@
 package handler
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/fanfaronDo/code_education_api/internal/service"
 	"github.com/go-chi/chi/v5"
-	"net/http"
 )
 
 type Handler struct {
@@ -29,14 +26,7 @@ func (h *Handler) InitRoutes() *chi.Mux {
 		r.Use(h.userIdentification)
 		r.Route("/notes", func(notes chi.Router) {
 			notes.Post("/", h.createNote)
-			
-			notes.Get("/", func(writer http.ResponseWriter, request *http.Request) {
-				response := map[string]interface{}{
-					"id": "Hello id",
-				}
-				er := json.NewEncoder(writer).Encode(response)
-				fmt.Println(er)
-			})
+			notes.Get("/", h.getNotes)
 		})
 
 	})

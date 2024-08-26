@@ -9,6 +9,10 @@ import (
 func (h *Handler) createNote(w http.ResponseWriter, r *http.Request) {
 
 	userID, err := getUserId(r)
+	if err != nil {
+		http.Error(w, "User not find in context", http.StatusBadRequest)
+		return
+	}
 	var inputNote domain.Note
 	if err := json.NewDecoder(r.Body).Decode(&inputNote); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -24,6 +28,7 @@ func (h *Handler) createNote(w http.ResponseWriter, r *http.Request) {
 	response := map[string]interface{}{
 		"id": id,
 	}
+
 	if err := json.NewEncoder(w).Encode(response); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

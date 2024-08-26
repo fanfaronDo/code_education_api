@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/fanfaronDo/code_education_api/internal/config"
 	"github.com/fanfaronDo/code_education_api/internal/handler"
 	"github.com/fanfaronDo/code_education_api/internal/repository"
@@ -18,7 +17,6 @@ func main() {
 
 	server := &server.Server{}
 	conn, err := repository.NewPostgres(cfg.Postgres)
-	fmt.Println(cfg, conn)
 	if err != nil {
 		log.Printf("Database connection error: %s\n", err)
 		return

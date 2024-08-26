@@ -3,7 +3,6 @@ package handler
 import (
 	"context"
 	"errors"
-	"fmt"
 	"net/http"
 	"strings"
 )
@@ -38,7 +37,6 @@ func (h *Handler) userIdentification(next http.Handler) http.Handler {
 		}
 
 		ctx := context.WithValue(r.Context(), userCtxKey, userID)
-		fmt.Println(ctx)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
