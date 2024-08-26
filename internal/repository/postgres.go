@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/fanfaronDo/code_education_api/internal/config"
+	_ "github.com/lib/pq"
 )
 
 func NewPostgres(cfg config.Postgres) (*sql.DB, error) {

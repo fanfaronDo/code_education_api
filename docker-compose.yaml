@@ -14,8 +14,27 @@ services:
       - POSTGRES_SSL_MODE=disable
     networks:
       my_net:
-          ipv4_address: 172.10.10.2
-
+        ipv4_address: 172.10.10.2
+  notes_service:
+    build: .
+    container_name: notes_service
+    command: ./wait-for-postgres.sh db ./note-app
+    environment:
+      - HTTP_SERVER_ADDRESS=127.0.0.1
+      - HTTP_SERVER_PORT=8080
+      - HTTP_SERVER_TIMEOUT=10s
+      - HTTP_SERVER_IDLE_TIMEOUT=30s
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DATABASE=notes
+      - POSTGRES_SSL_MODE=disable
+    networks:
+      my_net:
+        ipv4_address: 172.10.10.3
+    depends_on:
+      - postgres
 networks:
   my_net:
     driver: bridge
