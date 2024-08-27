@@ -9,5 +9,3 @@ require (
 )
 
 require github.com/dgrijalva/jwt-go v3.2.0+incompatible
-
-require github.com/vodkabears/yaspell v0.0.0-20170830135751-9cd6d0f0c052 // indirect

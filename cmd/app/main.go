@@ -1,32 +1,28 @@
 package main
 
 import (
-	"fmt"
+	"log"
+	"os"
+	"os/signal"
+	"syscall"
+
 	"github.com/fanfaronDo/code_education_api/internal/config"
 	"github.com/fanfaronDo/code_education_api/internal/handler"
 	"github.com/fanfaronDo/code_education_api/internal/repository"
 	"github.com/fanfaronDo/code_education_api/internal/server"
 	"github.com/fanfaronDo/code_education_api/internal/service"
-	"log"
-	"os"
-	"os/signal"
-	"syscall"
 )
 
 func main() {
 	cfg := config.ConfigLoad()
-	fmt.Println(cfg)
 	server := &server.Server{}
 	conn, err := repository.NewPostgres(cfg.Postgres)
 	if err != nil {
 		log.Printf("Database connection error: %s\n", err)
 		return
 	}
-	fmt.Println(conn)
 	repo := repository.NewRepository(conn)
-	fmt.Println(repo)
 	service := service.NewService(repo)
-	fmt.Println(service)
 	h := handler.NewHandler(service)
 	route := h.InitRoutes()
 	go func() {
@@ -36,6 +32,7 @@ func main() {
 		}
 	}()
 	defer server.Stop(nil)
+
 	log.Printf("Server started on %s\n", "http://"+cfg.HttpServer.Address+":"+cfg.HttpServer.Port)
 
 	quit := make(chan os.Signal, 1)

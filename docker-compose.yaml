@@ -4,6 +4,7 @@ services:
   postgres:
     image: postgres:latest
     container_name: postgres
+    restart: always
     volumes:
       - post_data:/var/lib/postgresql/data
       - ./schema/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
@@ -14,25 +15,33 @@ services:
       - POSTGRES_SSL_MODE=disable
     networks:
       my_net:
-        ipv4_address: 172.10.10.2
+        ipv4_address: 192.168.50.2
   notes_service:
     build: .
     container_name: notes_service
-    command: ./wait-for-postgres.sh db ./note-app
+    ports:
+      - 8080:8080
+    command: ./wait-for-postgres.sh '192.168.50.2' ./note-app
     environment:
       - HTTP_SERVER_ADDRESS=127.0.0.1
       - HTTP_SERVER_PORT=8080
       - HTTP_SERVER_TIMEOUT=10s
       - HTTP_SERVER_IDLE_TIMEOUT=30s
-      - POSTGRES_HOST=postgres
+      - POSTGRES_HOST=192.168.50.2
       - POSTGRES_PORT=5432
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DATABASE=notes
       - POSTGRES_SSL_MODE=disable
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 40s
     networks:
       my_net:
-        ipv4_address: 172.10.10.3
+        ipv4_address: 192.168.50.3
     depends_on:
       - postgres
 networks:
@@ -40,6 +49,6 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.10.10.0/29
+        - subnet: 192.168.50.0/24
 volumes:
   post_data:
