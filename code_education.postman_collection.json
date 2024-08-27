@@ -320,7 +320,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjQ3Mzc5NDgsImlhdCI6MTcyNDY5NDc0OCwidXNlcl9pZCI6MTR9.z37K0Nt0Bjo_3eWsnbAAV1ZQiKbJuwA9FylJwUR5wws",
+							"value": "{{BEARER}}",
 							"type": "string"
 						}
 					]
