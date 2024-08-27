@@ -16,11 +16,12 @@
 5. Инфроструктура в Docker-контейнерах, простое тестирование API
 
 
-1. Необходимо развернуть инфроструктуру. 
+
+1) Необходимо развернуть инфроструктуру. 
 
     docker-compose up -d
 
-2. Импортировать JSON файл code_education.postman_collection.json в Postman
+2) Импортировать JSON файл code_education.postman_collection.json в Postman
 
     Запустить тесты командой Run
 
