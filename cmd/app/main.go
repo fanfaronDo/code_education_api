@@ -7,6 +7,7 @@ import (
 	"syscall"
 
 	"github.com/fanfaronDo/code_education_api/internal/config"
+	"github.com/fanfaronDo/code_education_api/internal/domain"
 	"github.com/fanfaronDo/code_education_api/internal/handler"
 	"github.com/fanfaronDo/code_education_api/internal/repository"
 	"github.com/fanfaronDo/code_education_api/internal/server"
@@ -23,6 +24,22 @@ func main() {
 	}
 	repo := repository.NewRepository(conn)
 	service := service.NewService(repo)
+
+	user1 := domain.User{
+		Name:     "John Doe",
+		Username: "john_doe",
+		Password: "password123",
+	}
+
+	user2 := domain.User{
+		Name:     "Jane Smith",
+		Username: "jane_smith",
+		Password: "secret_pass",
+	}
+
+	service.AuthService.CreateUser(user1)
+	service.AuthService.CreateUser(user2)
+
 	h := handler.NewHandler(service)
 	route := h.InitRoutes()
 	go func() {
