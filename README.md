@@ -19,7 +19,7 @@
 
 1) Необходимо развернуть инфроструктуру. 
 
-    docker-compose up -d
+    <code> docker-compose up -d </code>
 
 2) Импортировать JSON файл code_education.postman_collection.json в Postman
 
