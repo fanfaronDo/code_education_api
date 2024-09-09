@@ -16,7 +16,7 @@ import (
 
 func main() {
 	cfg := config.ConfigLoad()
-	server := &server.Server{}
+	server := make(server.Server)
 	conn, err := repository.NewPostgres(cfg.Postgres)
 	if err != nil {
 		log.Printf("Database connection error: %s\n", err)
